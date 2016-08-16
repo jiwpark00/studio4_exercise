@@ -2,21 +2,22 @@ import webapp2
 
 
 # html boilerplate for the top of every page
-page_header =
+page_header = """
 <!DOCTYPE html>
 <html>
 <head>
-    <title>FlickList</title>
+<title>FlickList</title>
 </head>
 <body>
-    <h1>FlickList</h1>
+<h1>FlickList</h1>
+"""
 
 
 # html boilerplate for the bottom of every page
-page_footer =
+page_footer = """
 </body>
 </html>
-
+"""
 
 class Index(webapp2.RequestHandler):
     """ Handles requests coming in to '/' (the root of our site)
@@ -28,35 +29,33 @@ class Index(webapp2.RequestHandler):
         edit_header = "<h3>Edit My Watchlist</h3>"
 
         # a form for adding new movies
-        add_form =
+        add_form = """
         <form action="/add" method="post">
             <label>
                 I want to add <input type="text" name="new-movie"/> to my watchlist.
             </label>
             <input type="submit" value="Add It"/>
         </form>
-
+        """
 
         # TODO 1
         # Include another form so the user can "cross off" a movie from their list.
-        remove_form =
+        remove_form = """
         <form action="/remove" method="post">
             <label>
-                "I want to cross off
-                <input type="text" name="old-movie"/>
-                from my watchlist."
+                I want to cross off <input type="text" name="old-movie"/> from my watchlist.
             </label>
             <input type="submit" value=Remove it"/>
         </form>
+        """
 
         # TODO 4 (Extra Credit)
         # modify your form to use a dropdown (<select>) instead a
         # text box (<input type="text"/>)
 
 
-        response = page_header + edit_header + add_form + page_footer
+        response = page_header + edit_header + add_form +remove_form + page_footer
         self.response.write(response)
-
 
 class AddMovie(webapp2.RequestHandler):
     """ Handles requests coming in to '/add'
@@ -74,7 +73,6 @@ class AddMovie(webapp2.RequestHandler):
         response = page_header + "<p>" + sentence + "</p>" + page_footer
         self.response.write(response)
 
-
 # TODO 2
 # Create a new RequestHandler class called CrossOffMovie, to receive and
 # handle the request from your 'cross-off' form. The user should see a message like:
@@ -82,7 +80,7 @@ class AddMovie(webapp2.RequestHandler):
 
 class CrossOffMovie(webapp2.RequestHandler):
     """ Handles requests coming in to '/remove'
-        e.g. www.flicklist.com/add
+        e.g. www.flicklist.com/remove
     """
 
     def post(self):
@@ -90,8 +88,8 @@ class CrossOffMovie(webapp2.RequestHandler):
         old_movie = self.request.get("old-movie")
 
         # build response content
-        old_movie_element = "<strong>" + old_movie + "</strong>"
-        sentence = <strike>old_movie_element</strike> + " has been crossed off your Watchlist!"
+        old_movie_element = "<strike>" + old_movie + "</strike>"
+        sentence = old_movie_element + " has been crossed off your Watchlist!"
 
         response = page_header + "<p>" + sentence + "</p>" + page_footer
         self.response.write(response)
@@ -100,6 +98,6 @@ class CrossOffMovie(webapp2.RequestHandler):
 # Include a route for your cross-off handler, by adding another tuple to the list below.
 app = webapp2.WSGIApplication([
     ('/', Index),
-    ('/add', AddMovie)
-    ('/remove',RemoveMovie)
+    ('/add', AddMovie),
+    ('/remove',CrossOffMovie)
 ], debug=True)
