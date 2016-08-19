@@ -19,6 +19,7 @@ page_footer = """
 </html>
 """
 
+
 class Index(webapp2.RequestHandler):
     """ Handles requests coming in to '/' (the root of our site)
         e.g. www.flicklist.com/
