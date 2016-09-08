@@ -142,7 +142,7 @@ class MovieRatings(Handler):
 
         # TODO 2
         # retreive the movie entity whose id is movie_id
-        movie = None # type something else instead of None
+        movie = Movie.get_by_id( int(movie_id)) # type something else instead of None
 
         if movie and rating:
             # TODO 3
