@@ -16,7 +16,6 @@ terrible_movies = [
     "Nine Lives"
 ]
 
-
 class Movie(db.Model):
     title = db.StringProperty(required = True)
     created = db.DateTimeProperty(auto_now_add = True)
@@ -147,7 +146,8 @@ class MovieRatings(Handler):
         if movie and rating:
             # TODO 3
             # update the movie's rating property and save it to the database
-
+            movie.rating = rating
+            movie.put()
 
             # render confirmation
             t = jinja_env.get_template("rating-confirmation.html")
