@@ -127,7 +127,7 @@ class MovieRatings(Handler):
     def get(self):
         # TODO 1
         # Make a GQL query for all the movies that have been watched
-        watched_movies = [] # type something else instead of an empty list
+        watched_movies = db.GqlQuery("SELECT * FROM Movie WHERE watched = True ORDER BY created DESC")         # type something else instead of an empty list
 
         # TODO (extra credit)
         # in the query above, add something so that the movies are sorted by creation date, most recent first
